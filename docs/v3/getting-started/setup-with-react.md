@@ -7,21 +7,22 @@ title: Setup With React
 ## Installation
 
 ```
-npm i pulse-framework
+yarn add @pulsejs/core @pulsejs/react
 ```
+
+Think of `@pulsejs/react` as an extension of Pulse in the context of React. It provides access to all core functions + React only helpers such as the `usePulse` hook. We can't forget to install the `@pulsejs/core` as it is used by the React integration.
 
 ## Initialization
 
 ```ts
-import Pulse from 'pulse-framework';
-import React from 'react';
+import Pulse from '@pulsejs/react';
 
-export const App = new Pulse({
-    framework: React;
-})
+export const App = new Pulse();
 ```
 
-Follow this [guide]() to learn how to set up your core
+Unlike older versions you do not need to pass React into Pulse, as the React package lists React as a peer dependency. This allows for a much cleaner syntax for setup!
+
+Follow this [guide](../docs/core.html#definition) to learn how to set up your core.
 
 ## Functional Components: `usePulse()`
 
@@ -52,6 +53,7 @@ export default function Component(): React.FC {
   return <>{account.username}</>;
 }
 ```
+
 ### State Arrays
 
 usePulse also supports **arrays** of State instances, returning values as an array that can be destructured.
@@ -59,8 +61,8 @@ usePulse also supports **arrays** of State instances, returning values as an arr
 ```ts
 const [myState, anotherState] = usePulse([core.MY_STATE, core.ANOTHER_STATE]);
 ```
- The names of the values can be anything, though we recommend they be the camel case counter-part to the State instance name. This is completely typesafe as of version `3.1`
-  
+
+The names of the values can be anything, though we recommend they be the camel case counter-part to the State instance name. This is completely typesafe as of version `3.1`
 
 ## Class Components: `PulseHOC()`
 
@@ -79,3 +81,10 @@ export default PulseHoc(Component, [core.MY_STATE]);
 ::: warning
 PulseHOC is a low priority WIP and has not been tested at the time of writing these docs, if you need this and it doesn't work, please let me know via Discord
 :::
+
+## Additional Hooks
+
+Pulse's React integration also provides some helpful hooks for functional React components, the documentation for these hooks can be found in the sections for the parent functionality.
+
+- [useWatcher()](/v3/docs/state.html#methods) - A hook to use State watchers with auto cleanup/
+- [useEvent()](/v3/docs/events.html#useevent) - A hook to use a Pulse Event with a cleaner syntax and auto cleanup.

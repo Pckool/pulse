@@ -1,0 +1,33 @@
+{
+  "name": "@pulsejs/react",
+  "version": "3.4.2-0",
+  "author": "Jamie Pine",
+  "license": "MIT",
+  "description": "React integration for PulseJS",
+  "keywords": [],
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "@pulsejs/core": "^3.3.0",
+    "react": "^16.13.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.49",
+    "@types/react-test-renderer": "^16.9.3",
+    "react": "^16.13.1",
+    "react-test-renderer": "^16.13.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pulse-framework/pulse"
+  },
+  "files": [
+    "dist/**/*"
+  ]
+}

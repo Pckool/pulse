@@ -13,12 +13,18 @@ Created by [@jamiepine]() | Sponsored and maintained by the [Notify Team]()
 
 > _Pulse is a global state and logic framework for reactive Typescript & Javascript applications. Supporting frameworks like VueJS, React and React Native._
 
-<p align="left">
-  <a href="https://discord.gg/RjG8ShB"><img src="https://discordapp.com/api/guilds/658189217746255881/embed.png" alt="Join Discord"></a>
-  <a href="https://patreon.com/jamiepine"><img src="https://img.shields.io/badge/donate-patreon-F96854.svg" alt="Donate on patreon"></a>
-  <a href="https://twitter.com/jamiepine"><img src="https://img.shields.io/twitter/follow/jamiepine.svg?label=Jamie's Twitter" alt="Follow on twitter"></a>
-  <a href="https://twitter.com/pulseframework"><img src="https://img.shields.io/twitter/follow/pulseframework.svg?label=Pulse+Twitter" alt="Follow Pulse on twitter"></a>
-</p>
+<!-- Using HTML instead of Markdown links because they get themed with an 'external' badge -->
+<!-- TODO: Figure out if there's a way to remove the external badge so we can use sane syntax -->
+<a href="https://discord.gg/RjG8ShB" target="_blank">
+  <img src="https://discordapp.com/api/guilds/658189217746255881/embed.png" alt="Join Discord"></a>
+<a href="https://twitter.com/pulseframework" target="_blank">
+  <img src="https://img.shields.io/twitter/follow/pulseframework.svg?label=Pulse+on+Twitter" alt="Follow Pulse on Twitter"></a>
+<a href="https://twitter.com/jamiepine" target="_blank">
+  <img src="https://img.shields.io/twitter/follow/jamiepine.svg?label=Jamie+on+Twitter" alt="Follow Jamie Pine on Twitter"></a>
+
+<!-- [![Join Discord](https://discordapp.com/api/guilds/658189217746255881/embed.png)](https://discord.gg/RjG8ShB)
+[![Follow Pulse on Twitter](https://img.shields.io/twitter/follow/pulseframework.svg?label=Pulse+on+Twitter)](https://twitter.com/pulseframework)
+[![Follow Jamie Pine on Twitter](https://img.shields.io/twitter/follow/jamiepine.svg?label=Jamie+on+Twitter)](https://twitter.com/jamiepine) -->
 
 ```ts
 const App = new Pulse();
@@ -54,11 +60,13 @@ MY_STATE.toggle().persist().set().type().watch().reset().undo(); // etc...
 
 ### :robot: Computed State — [App.Computed()]()
 
-A function in which the return value is cached inside an extended State instance. Will magically recompute when it's dependencies change. Can track dependencies automatically or manually.
+Computed State is an extension of State. It computes a value from a function that you provide, and caches it to avoid unnecessary recomputation.
 
 ```ts
 const MY_COMPUTED = App.Computed(() => !!MY_STATE.value);
 ```
+
+It will magically recompute when it's dependencies change and can track dependencies automatically or manually.
 
 ### :sparkles: Collections — [App.Collection()]()
 
@@ -74,19 +82,19 @@ AccountCollection.collect(data);
 
 ### :sparkles: Groups — [Collection.Group()]()
 
-Groups handy to provide arrays of collection data and can be used independently in your components. When the index of a group is modified, it will "rebuild" the `output` with actual collection data.
+Groups handy to provide arrays of collection data and can be used independently in your components.
 
 ```ts
-const AccountCollection = App.Collection()(collection => ({
-  groups: {
-    AUTHED: collection.Group();
-  }
-}));
+const AUTHED = AccountCollection.Group([1, 2, 3]);
 
-AccountCollection.groups.AUTHED.output; // cached data
+AUTHED.output; // [{ id: 1, ...}...]
 ```
 
+When the index of a Group is modified, it will "rebuild" the `output` with actual collection data.
+
 ### :telephone_receiver: Promise based HTTP request API — [App.API()]()
+
+Create an API instance to make requests.
 
 ```ts
 const API = App.API({
@@ -94,6 +102,12 @@ const API = App.API({
   timeout: 10000,
   options: { credentials: 'include' }
 });
+```
+
+Create routes for your API as functions.
+
+```ts
+const GetAccount = async () => (await API.get('/account')).data;
 ```
 
 ### :floppy_disk: Persisted Storage API — [App.Storage()]()
@@ -145,18 +159,14 @@ App.Job(60000, () => {
 MY_STATE.watch('name', () => {
   // do something when MY_STATE changes
 });
-
-App.nextPulse(() => {
-  MY_STATE.removeWatcher('name');
-});
 ```
 
 ### :construction: Task queuing for race condition prevention
 
 ### :closed_book: [WIP] Error logging & snapshot bug reporting
 
-### :leaves: Lightweight (only 100KB) with 0 dependencies
+### :leaves: Lightweight (only 37KB) with 0 dependencies
 
-### :fire: Supports Vue, React and React Native `usePulse()`
+### :fire: Supports Vue, React, React Native and NextJS
 
 ### :yellow_heart: Well documented (I'm getting there...)
